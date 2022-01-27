@@ -1,0 +1,9 @@
+ 
+.idea/*
+*/node_modules/*
+
+.gitold/
+
+.ipynb_checkpoints/
+
+_private/
