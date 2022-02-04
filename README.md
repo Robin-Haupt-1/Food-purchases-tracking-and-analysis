@@ -8,3 +8,29 @@ That's why my plan is to create two types of product representation objects, one
 
 In the future i could add even higher-level categories like 'greens', 'frozen foods' or 'spices' that the abstract produce entities get tagged with. But there is no need to worry about this now, since the main focus needs to be on creating a means to accurately copy the information from all the receipts i am currently hoarding before their number gets discouragingly high.
 
+## Product object layout
+
+### Abstract product
+
+#### Name 
+Eg. dried red lentils, fresh kale, paprika spice powder
+
+#### How is the amount measured
+
+Usually in grams, but could also be milliliters for liquids or one bunch (for fresh parsley for example) or one piece of fruit or vegetable (one eggplant) though in instances of the last type in might be preferable to establish approximate weights and stick with those.
+
+### Concrete product
+ 
+#### Name
+-> Inherited from base product
+
+#### Brand
+Brand name that's on the packaging
+
+#### Measurement (weight/volume)
+For anything that has a fixed package size
+
+
+Note that price is not a piece of data to be stored in the product item's definition, since it can and will fluctuate. It is instead to be derived from the purchase history.
+
+
