@@ -1,6 +1,23 @@
 from dataclasses import dataclass
+import datetime
 
- 
+@dataclass
+class Store:
+    """Represents a store."""
+    name:str
+    ID:int=None
+
+@dataclass
+class Purchase:
+    """Represents a purchase of a single item.
+    """
+    date:datetime.date
+    storeID:int
+    abstractItemID:int
+    itemID:int=None
+    ID:int=None
+
+
 @dataclass
 class AbstractProductItem:
     """
@@ -20,10 +37,12 @@ class ConcreteProductItem:
 
     Measurement: weight/volume of product unit in g/ml
     """
-    abstractItemId:int
+    abstractItemID:int
     name: str
     brand: str
     measurement: int
+    store_specific:bool
+    storeID:int=None
     ID:int = None
 
 
