@@ -7,3 +7,5 @@
 .ipynb_checkpoints/
 
 _private/
+
+py-prototyping/__pycache__/
