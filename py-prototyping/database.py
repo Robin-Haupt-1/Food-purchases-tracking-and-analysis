@@ -19,33 +19,61 @@ class IDatabase:
     def __init__(self):
         """"""
 
+    # ~ Create
+
+    def create_concrete_item(self, item: ConcreteProductItem):
+        pass
+
+    def create_abstract_item(self, item: AbstractProductItem):
+        pass
+
+    def create_purchase(self, purchase: Purchase):
+        pass
+
+    def create_store(self, store: Store):
+        pass
+
     # ~ Read
 
     def all_stores(self) -> [Store]:
-        """Returns all stores"""
+        pass
 
     def all_abstract_items(self) -> [AbstractProductItem]:
-        """Returns all abstract items"""
+        pass
 
     def all_concrete_items(self) -> [ConcreteProductItem]:
-        """Returns all concrete items"""
+        pass
 
     def all_purchases(self) -> [Purchase]:
-        """Returns all purchases"""
+        pass
 
-    # ~ Add
+    # ~ Update
 
-    def add_concrete_item(self, item: ConcreteProductItem):
-        """Add a concrete item"""
+    def update_concrete_item(self, item: ConcreteProductItem):
+        pass
 
-    def add_abstract_item(self, item: AbstractProductItem):
-        """Add an abstract item"""
+    def update_abstract_item(self, item: AbstractProductItem):
+        pass
 
-    def add_purchase(self, purchase: Purchase):
-        """Add a purchase"""
+    def update_purchase(self, purchase: Purchase):
+        pass
 
-    def add_store(self, store: Store):
-        """Add a store"""
+    def update_store(self, store: Store):
+        pass
+
+    # ~ Delete
+
+    def delete_concrete_item(self, item: ConcreteProductItem):
+        pass
+
+    def delete_abstract_item(self, item: AbstractProductItem):
+        pass
+
+    def delete_purchase(self, purchase: Purchase):
+        pass
+
+    def delete_store(self, store: Store):
+        pass
 
 
 class MySQLDatabase(IDatabase):
@@ -73,14 +101,14 @@ class MySQLDatabase(IDatabase):
 
     # ~ Add
 
-    def add_concrete_item(self, item: ConcreteProductItem):
+    def create_concrete_item(self, item: ConcreteProductItem):
         pass
 
-    def add_abstract_item(self, item: AbstractProductItem):
+    def create_abstract_item(self, item: AbstractProductItem):
         pass
 
-    def add_purchase(self, purchase: Purchase):
+    def create_purchase(self, purchase: Purchase):
         pass
 
-    def add_store(self, store: Store):
+    def create_store(self, store: Store):
         pass
