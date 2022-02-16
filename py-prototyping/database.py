@@ -84,21 +84,3 @@ class MySQLDatabase(IDatabase):
 
     def add_store(self, store: Store):
         pass
-
-    def all_items(self):
-        cur.execute("select id, name, metric, measure, measurement from foodp_items")
-        return cur.fetchall()
-
-    def add_item(self, name, metric, measurement=None, measure=None):
-        print(name, metric, measurement, measure)
-
-        log("Adding new item " + name)
-        cur.execute("insert into foodp_items (name,metric,measure,measurement) values (%s,%s,%s,%s)",
-                    (name, metric, measure, measurement))
-        print(name, metric, measurement, measure)
-        conn.commit()
-
-
-d = MySQLDatabase()
-
-print(d.all_concrete_items()[0].__dict__)
