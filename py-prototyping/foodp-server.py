@@ -21,16 +21,16 @@ db = MySQLDatabase()
 
 
 def make_response_from_list(response):
-    if type(response)==list:
-        response=[item.__dict__ for item in response]
-    response = flask.make_response(json.dumps(response))
+    if type(response) == list:
+        response = [item.__dict__ for item in response]
+    response = flask.make_response(json.dumps(response,indent=4))
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 
 @app.route("/stores/all")
 def get_all_stores():
-    return make_response_from_list(db.all_stores())
+    return make_response_from_list(db.get_all_stores())
 
 
 if __name__ == "__main__":
