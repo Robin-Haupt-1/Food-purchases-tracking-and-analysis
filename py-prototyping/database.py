@@ -8,6 +8,7 @@ import random
 from dataclasses import dataclass
 import mysql.connector
 from fp_types import *
+import datetime
 
 log = Logging("FPT Database").log
 
@@ -81,25 +82,7 @@ class MySQLDatabase(IDatabase):
         super(MySQLDatabase).__init__()
         """"""
 
-    # ~ Read
-
-    def all_stores(self) -> [Store]:
-        cur.execute("select * from foodp_stores")
-        return [Store(**store) for store in cur.fetchall()]
-
-    def all_abstract_items(self) -> [AbstractProductItem]:
-        cur.execute("select * from foodp_abstract_items")
-        return [AbstractProductItem(**item) for item in cur.fetchall()]
-
-    def all_concrete_items(self) -> [ConcreteProductItem]:
-        cur.execute("select * from foodp_concrete_items")
-        return [ConcreteProductItem(**item) for item in cur.fetchall()]
-        pass
-
-    def all_purchases(self) -> [Purchase]:
-        pass
-
-    # ~ Add
+    # ~ Create
 
     def create_concrete_item(self, item: ConcreteProductItem):
         pass
@@ -112,3 +95,52 @@ class MySQLDatabase(IDatabase):
 
     def create_store(self, store: Store):
         pass
+
+    # ~ Read
+
+    def get_all_stores(self) -> [Store]:
+        cur.execute("select * from foodp_stores")
+        return [Store(**store) for store in cur.fetchall()]
+
+    def get_all_abstract_items(self) -> [AbstractProductItem]:
+        cur.execute("select * from foodp_abstract_items")
+        return [AbstractProductItem(**item) for item in cur.fetchall()]
+
+    def get_all_concrete_items(self) -> [ConcreteProductItem]:
+        cur.execute("select * from foodp_concrete_items")
+        return [ConcreteProductItem(**item) for item in cur.fetchall()]
+        pass
+
+    def get_all_purchases(self) -> [Purchase]:
+        pass
+
+    # ~ Update
+
+    def update_concrete_item(self, item: ConcreteProductItem):
+        pass
+
+    def update_abstract_item(self, item: AbstractProductItem):
+        pass
+
+    def update_purchase(self, purchase: Purchase):
+        pass
+
+    def update_store(self, store: Store):
+        pass
+
+    # ~ Delete
+
+    def delete_concrete_item(self, item: ConcreteProductItem):
+        pass
+
+    def delete_abstract_item(self, item: AbstractProductItem):
+        pass
+
+    def delete_purchase(self, purchase: Purchase):
+        pass
+
+    def delete_store(self, store: Store):
+        pass
+
+
+
