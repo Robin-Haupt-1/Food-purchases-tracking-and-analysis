@@ -35,16 +35,16 @@ class IDatabase:
 
     # ~ Read
 
-    def all_stores(self) -> [Store]:
+    def get_all_stores(self) -> [Store]:
         pass
 
-    def all_abstract_items(self) -> [AbstractProductItem]:
+    def get_all_abstract_items(self) -> [AbstractProductItem]:
         pass
 
-    def all_concrete_items(self) -> [ConcreteProductItem]:
+    def get_all_concrete_items(self) -> [ConcreteProductItem]:
         pass
 
-    def all_purchases(self) -> [Purchase]:
+    def get_all_purchases(self) -> [Purchase]:
         pass
 
     # ~ Update
