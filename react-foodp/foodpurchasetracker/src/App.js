@@ -1,5 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+ 
+class MainComponent extends React.Component{
+  constructor(props){
+    super(props)
+    this.state={stores:["Aldi","Rewe"]}
+  }
+  render(){
+    return (<h1>{this.state.stores.map(store=>{return <h1>{store}</h1>})}</h1>)    
+  }
+}
 
 function App() {
   return (
@@ -15,7 +27,8 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Learn React 
+    <MainComponent/> 
         </a>
       </header>
     </div>
