@@ -19,8 +19,8 @@ class Purchase:
     storeID: int
     cost: int  # in cents
 
-    concreteItemID: int =None
-    abstractItemID:int=None
+    concreteItemID: int = None
+    abstractItemID: int = None
     measurement: int = None  # in ml/g
     amount: int = None
     ID: int = None

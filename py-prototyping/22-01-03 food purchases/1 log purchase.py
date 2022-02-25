@@ -143,7 +143,9 @@ class db:
 
 
 d=db()
+
 print(d.all_stores())
+
 @app.route("/stores/all")
 def all_stores():
     response = flask.make_response(json.dumps(d.all_stores()))
