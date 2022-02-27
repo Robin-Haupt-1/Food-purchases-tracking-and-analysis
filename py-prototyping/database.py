@@ -108,7 +108,7 @@ class MySQLDatabase(IDatabase):
         pass
 
     def create_store(self, store: Store):
-        self.create(self.tables.STORES, store.__dict__)
+        self.create(self.tables.STORES.value, store.__dict__)
         placeholders = ', '.join(['%s'] * len(storeDict))
         columns = ', '.join(storeDict.keys())
         sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (self.tables.STORES, columns, placeholders)
