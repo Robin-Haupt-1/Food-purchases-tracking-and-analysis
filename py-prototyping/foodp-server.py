@@ -17,7 +17,7 @@ from dataclasses import dataclass
 
 from database import *
 
-db = MySQLDatabase()
+db = MySQLDatabase(Tables,conn)
 
 
 def make_response_from_list(response):
