@@ -8,6 +8,7 @@ import flask
 from flask import Flask, request
 import datetime
 import pickle
+from database import *
 
 app = Flask(__name__)
 
@@ -15,7 +16,6 @@ import json
 import random
 from dataclasses import dataclass
 
-from database import *
 
 db = MySQLDatabase(Tables,conn)
 
