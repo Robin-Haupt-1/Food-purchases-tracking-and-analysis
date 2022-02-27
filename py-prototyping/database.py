@@ -89,6 +89,13 @@ class MySQLDatabase(IDatabase):
         self.conn = mysql_connector
         """"""
 
+    def create(self, table: Tables, entry: dict):
+        placeholders = ', '.join(['%s'] * len(entry))
+        columns = ', '.join(entry.keys())
+        sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (table, columns, placeholders)
+        cur.execute(sql, list(entry.values()))
+        conn.commit()
+
     # ~ Create
 
     def create_concrete_item(self, item: ConcreteProductItem):
