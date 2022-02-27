@@ -3,10 +3,17 @@ import logo from './logo.svg';
 import { Counter } from './features/counter/Counter';
 import './App.css';
 import Button from 'react-bootstrap/Button';
- 
-import Toast from 'react-bootstrap/Toast';
-import Container from 'react-bootstrap/Container'; 
 
+import Toast from 'react-bootstrap/Toast';
+import Container from 'react-bootstrap/Container';
+
+let server = "http://10.28.4.66:1241"
+
+function load_stores() {
+  fetch(server + "/stores/all").then(r => r.json()).then(j => alert(j))
+
+}
+//load_stores()  
 
 const ExampleToast = ({ children }) => {
   const [show, toggleShow] = useState(true);
@@ -23,18 +30,19 @@ const ExampleToast = ({ children }) => {
     </>
   );
 };
+
 function App() {
   return (
     <div className="App">
-      <Container className="p-3"> 
-      <h1 className="header">Welcome To React-Bootstrap</h1>
-      <ExampleToast>
-        We now have Toasts
-        <span role="img" aria-label="tada">
-          🎉
-        </span>
-      </ExampleToast> 
-  </Container>
+      <Container className="p-3">
+        <h1 className="header">Welcome To React-Bootstrap</h1>
+        <ExampleToast>
+          We now have Toasts
+          <span role="img" aria-label="tada">
+            🎉
+          </span>
+        </ExampleToast>
+      </Container>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />
