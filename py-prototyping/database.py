@@ -87,7 +87,6 @@ class MySQLDatabase(IDatabase):
         super(MySQLDatabase).__init__()
         self.tables = tables
         self.conn = mysql_connector
-        """"""
 
     def create(self, table: Tables, entry: dict):
         placeholders = ', '.join(['%s'] * len(entry))
@@ -157,6 +156,6 @@ class MySQLDatabase(IDatabase):
         pass
 
 
-db = MySQLDatabase()
-db.create_store(Store(name="Test", ID=59))
-
+db = MySQLDatabase(Tables, conn)
+#db.create_store(Store(name="Test", ID=99))
+print(db.get_all_stores())
