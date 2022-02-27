@@ -9,6 +9,7 @@ from dataclasses import dataclass
 import mysql.connector
 from fp_types import *
 import datetime
+from enum import Enum
 
 log = Logging("FPT Database").log
 
@@ -77,6 +78,10 @@ class IDatabase:
         pass
 
 
+class Tables(Enum):
+    STORES = "foodp_stores"
+
+
 class MySQLDatabase(IDatabase):
     def __init__(self):
         super(MySQLDatabase).__init__()
@@ -97,7 +102,7 @@ class MySQLDatabase(IDatabase):
         storeDict = store.__dict__
         placeholders = ', '.join(['%s'] * len(storeDict))
         columns = ', '.join(storeDict.keys())
-        sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % ("foodp_stores", columns, placeholders)
+        sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (Tables.STORES, columns, placeholders)
         cur.execute(sql, list(storeDict.values()))
         # cur.execute("insert into foodp_stores (name,ID) value (%s,%s)", (store.name, store.ID))
         conn.commit()
