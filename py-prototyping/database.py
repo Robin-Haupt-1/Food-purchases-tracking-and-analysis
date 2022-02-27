@@ -83,7 +83,7 @@ class Tables(Enum):
 
 
 class MySQLDatabase(IDatabase):
-    def __init__(self, tables: Enum, mysql_connector: mysql.connector.connection):
+    def __init__(self, tables: type(Tables), mysql_connector: mysql.connector.connection):
         super(MySQLDatabase).__init__()
         self.tables = tables
         self.conn = mysql_connector
