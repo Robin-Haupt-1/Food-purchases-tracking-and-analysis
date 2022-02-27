@@ -109,13 +109,6 @@ class MySQLDatabase(IDatabase):
 
     def create_store(self, store: Store):
         self.create(self.tables.STORES.value, store.__dict__)
-        placeholders = ', '.join(['%s'] * len(storeDict))
-        columns = ', '.join(storeDict.keys())
-        sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (self.tables.STORES, columns, placeholders)
-        cur.execute(sql, list(storeDict.values()))
-        # cur.execute("insert into foodp_stores (name,ID) value (%s,%s)", (store.name, store.ID))
-        conn.commit()
-        pass
 
     # ~ Read
 
