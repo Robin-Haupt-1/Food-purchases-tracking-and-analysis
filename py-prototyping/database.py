@@ -83,8 +83,10 @@ class Tables(Enum):
 
 
 class MySQLDatabase(IDatabase):
-    def __init__(self):
+    def __init__(self, tables: Enum, mysql_connector: mysql.connector.connection):
         super(MySQLDatabase).__init__()
+        self.tables = tables
+        self.conn = mysql_connector
         """"""
 
     # ~ Create
@@ -102,7 +104,7 @@ class MySQLDatabase(IDatabase):
         storeDict = store.__dict__
         placeholders = ', '.join(['%s'] * len(storeDict))
         columns = ', '.join(storeDict.keys())
-        sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (Tables.STORES, columns, placeholders)
+        sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (self.tables.STORES, columns, placeholders)
         cur.execute(sql, list(storeDict.values()))
         # cur.execute("insert into foodp_stores (name,ID) value (%s,%s)", (store.name, store.ID))
         conn.commit()
