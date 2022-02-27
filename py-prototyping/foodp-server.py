@@ -17,13 +17,13 @@ import random
 from dataclasses import dataclass
 
 
-db = MySQLDatabase(Tables,conn)
+db = MySQLDatabase(Tables, conn)
 
 
 def make_response_from_list(response):
     if type(response) == list:
         response = [item.__dict__ for item in response]
-    response = flask.make_response(json.dumps(response,indent=4))
+    response = flask.make_response(json.dumps(response, indent=4))
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
