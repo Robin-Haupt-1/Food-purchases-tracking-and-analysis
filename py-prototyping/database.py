@@ -125,6 +125,8 @@ class MySQLDatabase(IDatabase):
         pass
 
     def get_all_purchases(self) -> [Purchase]:
+        cur.execute("select * from foodp_purchases")
+        return [Purchase(**item) for item in cur.fetchall()]
         pass
 
     # ~ Update
