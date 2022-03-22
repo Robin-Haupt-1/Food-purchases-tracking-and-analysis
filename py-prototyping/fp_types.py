@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 import datetime
+from typing import Union
 
 
 @dataclass
@@ -15,7 +16,7 @@ class Purchase:
     if its a concrete item, has amount, but no measurement (this can be calculated from concrete item measurement * amount)
     if its an abstract item (fresh cherries weighed at checkout) has measurement but no amount
     """
-    date: datetime.date
+    date: Union[datetime.date, str]
     storeID: int
     cost: int  # in cents
 
@@ -24,6 +25,9 @@ class Purchase:
     measurement: int = None  # in ml/g
     amount: int = None
     ID: int = None
+
+    def __post_init__(self):
+        self.date = self.date.strftime("%Y-%m-%d")
 
 
 @dataclass
