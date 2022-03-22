@@ -16,7 +16,6 @@ import json
 import random
 from dataclasses import dataclass
 
-
 db = MySQLDatabase(Tables, conn)
 
 
@@ -31,6 +30,20 @@ def make_response_from_list(response):
 @app.route("/stores/all")
 def get_all_stores():
     return make_response_from_list(db.get_all_stores())
+
+
+@app.route("/items/concrete/all")
+def get_all_concrete_items():
+    return make_response_from_list(db.get_all_concrete_items())
+
+
+@app.route("/items/abstract/all")
+def get_all_abstract_items():
+    return make_response_from_list(db.get_all_abstract_items())
+
+@app.route("/purchases/all")
+def get_all_purchases():
+    return make_response_from_list(db.get_all_purchases())
 
 
 if __name__ == "__main__":
