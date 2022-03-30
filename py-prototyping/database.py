@@ -80,6 +80,9 @@ class IDatabase:
 
 class Tables(Enum):
     STORES = "foodp_stores"
+    ABSTRACT_ITEMS = "foodp_abstract_items"
+    CONCRETE_ITEMS = "foodp_concrete_items"
+    PURCHASES = "foodp_purchases"
 
 
 class MySQLDatabase(IDatabase):
