@@ -27,6 +27,11 @@ def make_response_from_list(response):
     return response
 
 
+def make_success_response():
+    response = flask.make_response(json.dumps({"status": "success"}, indent=4))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 @app.route("/stores/all")
 def get_all_stores():
     return make_response_from_list(db.get_all_stores())
