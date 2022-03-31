@@ -32,6 +32,7 @@ def make_success_response():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
+
 @app.route("/stores/all")
 def get_all_stores():
     return make_response_from_list(db.get_all_stores())
@@ -46,9 +47,23 @@ def get_all_concrete_items():
 def get_all_abstract_items():
     return make_response_from_list(db.get_all_abstract_items())
 
+
 @app.route("/purchases/all")
 def get_all_purchases():
     return make_response_from_list(db.get_all_purchases())
+
+
+@app.route("/items/concrete/add", methods=['POST'])
+def add_concrete_item():
+    # TODO check refereced abstract item and store id exists
+    db.create_concrete_item(ConcreteProductItem(**request.json))
+    return make_success_response()
+
+
+@app.route("/items/abstract/add", methods=['POST'])
+def add_abstract_item():
+    db.create_abstract_item(AbstractProductItem(**request.json))
+    return make_success_response()
 
 
 if __name__ == "__main__":
