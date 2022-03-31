@@ -29,6 +29,12 @@ class Purchase:
     def __post_init__(self):
         self.date = self.date.strftime("%Y-%m-%d")
 
+        if not ( self.measurement or self.amount):
+            raise Exception("Please specify measurement or amount!")
+
+        if not (self.concreteItemID or self.abstractItemID):
+            raise Exception("Please supply ID of item!")
+
 
 @dataclass
 class AbstractProductItem:
@@ -56,3 +62,8 @@ class ConcreteProductItem:
     store_specific: bool
     storeID: int = None
     ID: int = None
+
+    def __post_init__(self):
+        if self.store_specific and not self.storeID:
+            raise Exception("Please specify ID of store this item is specific for!")
+
