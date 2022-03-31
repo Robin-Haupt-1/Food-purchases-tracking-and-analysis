@@ -101,12 +101,15 @@ class MySQLDatabase(IDatabase):
     # ~ Create
 
     def create_concrete_item(self, item: ConcreteProductItem):
+        self.create(self.tables.CONCRETE_ITEMS.value, item.__dict__)
         pass
 
     def create_abstract_item(self, item: AbstractProductItem):
+        self.create(self.tables.ABSTRACT_ITEMS.value, item.__dict__)
         pass
 
     def create_purchase(self, purchase: Purchase):
+        self.create(self.tables.PURCHASES.value, purchase.__dict__)
         pass
 
     def create_store(self, store: Store):
@@ -162,5 +165,5 @@ class MySQLDatabase(IDatabase):
 
 
 db = MySQLDatabase(Tables, conn)
-#db.create_store(Store(name="Test", ID=99))
+# db.create_store(Store(name="Test", ID=99))
 print(db.get_all_stores())
