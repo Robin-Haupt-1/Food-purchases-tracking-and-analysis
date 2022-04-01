@@ -21,6 +21,7 @@ class FoodPCLI:
         self.log("Started")
         self.sync()
         selected_store: Store = None
+        date: datetime.date = None
         while True:
             if selected_store:
                 if input(f"Keep store {colored(selected_store.name, 'yellow')}? y/n") == "y":
@@ -42,8 +43,24 @@ class FoodPCLI:
                     print(traceback.print_exc())
 
             self.log("Selected " + colored(selected_store.name, "green"))
+            while date is None:
+                try:
+                    self.log('Enter date ("t" for today)')
 
-            continue
+                    #datestr = input("Date (YYYYMMDD): ").strip()
+                    datestr="t"
+                    if datestr == "t":
+                        date = datetime.datetime.now().date()
+                    else:
+                        try:
+                            date = datetime.datetime.strptime(datestr, "%Y%m%d")
+                        except Exception as e:
+                            print("Error!")
+                except Exception as e:
+                    print(traceback.print_exc())
+
+            self.log("Selected " + colored(date.strftime('%Y-%m-%d'), "green"))
+
             while True:
                 cost: int = None  # in cents
                 concrete_item: ConcreteProductItem = None
