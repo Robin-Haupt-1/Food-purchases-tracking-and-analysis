@@ -40,7 +40,7 @@ class FoodPCLI:
                     for store in self.stores:
                         self.log(f'{store.ID}: {store.name}', start="\t", color="yellow")
 
-                    store = int(input("Store:"))
+                    store = int(input("Store: "))
                     for s in self.stores:
                         if s.ID == store:
                             selected_store = s
@@ -67,11 +67,37 @@ class FoodPCLI:
             self.log("Selected " + colored(date.strftime('%Y-%m-%d'), "green"))
 
             while True:
+                self.log('Search for item (input "n" to create a new one, - to update date and store"')
+                _input = input("Search: ").strip()
+
+                if _input == "n":
+                    # create new item
+                    self.sync()
+                    continue
+                    pass
+                elif _input == "-":
+                    date = None
+                    selected_store = None
+                    break
+
                 cost: int = None  # in cents
                 concrete_item: ConcreteProductItem = None
                 abstract_Item: AbstractProductItem = None
                 measurement: int = None  # in ml/g
                 amount: int = None
+
+                self.log("Concrete items:")
+                self.log("---------------")
+                for i in self.concrete_items:
+                    if _input in i.name:
+                        a = self.get_abstract_item(i.abstractItemID)
+                        self.log(f'{i.ID}: {i.name} ({i.brand}) {i.measurement} {a.metric}', color="yellow")
+                self.log("")
+                self.log("Abstract items:")
+                self.log("---------------")
+                for i in self.abstract_items:
+                    if _input in i.name:
+                        self.log(f'{-i.ID}: {i.name} ({i.metric})', color="yellow")
 
                 self.sync()
                 # start entering purchase procedure
