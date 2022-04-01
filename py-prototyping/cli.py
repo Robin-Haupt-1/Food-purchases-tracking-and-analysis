@@ -17,6 +17,11 @@ class FoodPCLI:
         self.concrete_items = [ConcreteProductItem(**store) for store in requests.get(self.server + "/items/concrete/all").json()]
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
 
+    def get_abstract_item(self, id: int):
+        for i in self.abstract_items:
+            if i.ID == id:
+                return i
+
     def __init__(self):
         self.log("Started")
         self.sync()
