@@ -66,5 +66,11 @@ def add_abstract_item():
     return make_success_response()
 
 
+@app.route("/purchases/add", methods=['POST'])
+def add_purchase():
+    db.create_purchase(Purchase(**request.json))
+    return make_success_response()
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=1241)
