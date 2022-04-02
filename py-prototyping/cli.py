@@ -15,6 +15,9 @@ class TempItemId:
     def get_item(self, id: int) -> Union[ConcreteProductItem, AbstractProductItem]:
         return self.items[id - 1]
 
+    def reset_ids(self):
+        self.items = []
+
 
 temp_item_id_helper = TempItemId()
 
@@ -159,6 +162,7 @@ class FoodPCLI:
 
                     except Exception as e:
                         pass
+                    temp_item_id_helper.reset_ids()
 
                 if type(selected_item) == ConcreteProductItem:
 
