@@ -32,6 +32,17 @@ class FoodPCLI:
         self.concrete_items = [ConcreteProductItem(**store) for store in requests.get(self.server + "/items/concrete/all").json()]
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
 
+    def save_purchase(self, purchase: Purchase):
+        try:
+            x = requests.post(self.server + "/purchases/add",
+                              data=json.dumps(purchase.__dict__),
+                              headers={'Content-Type': 'application/json'})
+
+            if json.loads(x.text)["status"] == "success":
+                self.log("Successfully created purchase!", color="green")
+        except Exception:
+            traceback.print_exc()
+
     def get_abstract_item(self, id: int):
         for i in self.abstract_items:
             if i.ID == id:
