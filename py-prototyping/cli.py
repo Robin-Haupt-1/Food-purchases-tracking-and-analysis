@@ -126,6 +126,15 @@ class FoodPCLI:
                     except Exception as e:
                         pass
 
+                if type(selected_item) == ConcreteProductItem:
+
+                    while amount is None:
+                        try:
+                            self.log("Input amount")
+                            amount = int(input("Amount: ").strip())
+                        except Exception:
+                            pass
+
                     self.sync()
 
 
