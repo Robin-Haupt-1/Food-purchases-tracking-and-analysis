@@ -106,7 +106,7 @@ class FoodPCLI:
                     self.log("---------------")
                     for i in self.abstract_items:
                         if _input in i.name:
-                            self.log(f'{temp_item_id_helper.get_id(i)}: {i.name} ({i.metric})', color="yellow")
+                            self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)})', color="yellow")
                     self.log("")
 
                     self.log("Concrete items:")
@@ -114,7 +114,7 @@ class FoodPCLI:
                     for i in self.concrete_items:
                         if _input in i.name:
                             a = self.get_abstract_item(i.abstractItemID)
-                            self.log(f'{temp_item_id_helper.get_id(i)}: {i.name} ({i.brand}) {i.measurement} {a.metric}', color="yellow")
+                            self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)} ({i.measurement} {a.metric})', color="yellow")
 
                     _input = input("ID or new search phrase: ").strip()
 
