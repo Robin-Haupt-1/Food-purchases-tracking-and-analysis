@@ -149,6 +149,8 @@ class FoodPCLI:
                         cost = int(input("Measurement: ").strip())
                     except Exception:
                         pass
+                new_purchase = Purchase(date, selected_store.ID, cost, concreteItemID=selected_item.ID if type(selected_item) == ConcreteProductItem else None,
+                                        abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
                     self.sync()
 
 
