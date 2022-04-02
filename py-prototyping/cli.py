@@ -34,25 +34,28 @@ class FoodPCLI:
         self.stores = [Store(**store) for store in requests.get(self.server + "/stores/all").json()]
         self.concrete_items = [ConcreteProductItem(**store) for store in requests.get(self.server + "/items/concrete/all").json()]
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
- 
-    def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]):
 
+    def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]) -> Union[None, int]:
+        new_id = None
         try:
             if type(item) == Purchase:
                 x = requests.post(self.server + "/purchases/add",
                                   data=json.dumps(item.__dict__),
                                   headers={'Content-Type': 'application/json'})
-
-                if json.loads(x.text)["status"] == "success":
+                reply = json.loads(x.text)
+                if reply["status"] == "success":
                     self.log("Successfully created purchase!", color="green")
+                    new_id = reply["id"] if "id" in reply else None
 
             if type(item) == ConcreteProductItem:
                 x = requests.post(self.server + "/items/concrete/add",
                                   data=json.dumps(item.__dict__),
                                   headers={'Content-Type': 'application/json'})
 
-                if json.loads(x.text)["status"] == "success":
+                reply = json.loads(x.text)
+                if reply["status"] == "success":
                     self.log("Successfully created concrete product item!", color="green")
+                    new_id = reply["id"] if "id" in reply else None
             if type(item) == AbstractProductItem:
                 x = requests.post(self.server + "/items/abstract/add",
                                   data=json.dumps(item.__dict__),
@@ -65,6 +68,7 @@ class FoodPCLI:
 
         except Exception:
             traceback.print_exc()
+        return new_id
 
     def get_abstract_item(self, id: int):
         for i in self.abstract_items:
