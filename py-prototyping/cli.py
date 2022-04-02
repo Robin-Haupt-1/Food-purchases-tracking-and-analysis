@@ -119,7 +119,8 @@ class FoodPCLI:
                     _input = input("ID or new search phrase: ").strip()
 
                     try:
-                        id = int(_input)
+                        _id = int(_input)
+                        selected_item = temp_item_id_helper.get_item(_id)
 
                     except Exception as e:
                         pass
