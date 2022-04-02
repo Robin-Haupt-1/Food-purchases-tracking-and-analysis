@@ -8,7 +8,7 @@ class TempItemId:
     items: [Union[ConcreteProductItem, AbstractProductItem]] = []
 
     def get_id(self, item: Union[ConcreteProductItem, AbstractProductItem]) -> int:
-        if not item in self.items:
+        if item not in self.items:
             self.items.append(item)
         return self.items.index(item) + 1
 
@@ -40,14 +40,9 @@ class FoodPCLI:
     def __init__(self):
         self.log("Started")
         self.sync()
-        selected_store: Store = None
-        date: datetime.date = None
+        selected_store: Union[Store, None] = None
+        date: [datetime.date, None] = None
         while True:
-            if selected_store:
-                if input(f"Keep store {colored(selected_store.name, 'yellow')}? y/n") == "y":
-                    print("keeping!")
-                else:
-                    selected_store = None
             while selected_store is None:
                 try:
                     self.log("Enter store")
@@ -67,8 +62,8 @@ class FoodPCLI:
                 try:
                     self.log('Enter date ("t" for today)')
 
-                    #datestr = input("Date (YYYYMMDD): ").strip()
-                    datestr="t"
+                    # datestr = input("Date (YYYYMMDD): ").strip()
+                    datestr = "t"
                     if datestr == "t":
                         date = datetime.datetime.now().date()
                     else:
@@ -96,12 +91,12 @@ class FoodPCLI:
                         selected_store = None
                         break
 
-                    cost: int = None  # in cents
-                    concrete_item: ConcreteProductItem = None
-                    abstract_Item: AbstractProductItem = None
+                    cost: Union[int, None] = None  # in cents
+                    concrete_item: Union[ConcreteProductItem, None] = None
+                    abstract_Item: Union[AbstractProductItem, None] = None
 
-                    measurement: int = None  # in ml/g
-                    amount: int = None
+                    measurement: Union[None, int] = None  # in ml/g
+                    amount: Union[None, int] = None
 
                     self.log("Abstract items:")
                     self.log("---------------")
@@ -122,6 +117,7 @@ class FoodPCLI:
                     try:
                         _id = int(_input)
                         selected_item = temp_item_id_helper.get_item(_id)
+                        self.log(f'Selected: {colored(str(selected_item), "green")}')
 
                     except Exception as e:
                         pass
@@ -151,7 +147,7 @@ class FoodPCLI:
                         pass
                 new_purchase = Purchase(date, selected_store.ID, cost, concreteItemID=selected_item.ID if type(selected_item) == ConcreteProductItem else None,
                                         abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
-                    self.sync()
+            self.sync()
 
 
 cli = FoodPCLI()
