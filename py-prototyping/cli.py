@@ -187,5 +187,78 @@ class FoodPCLI:
                                         abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
             self.sync()
 
+    def create_concrete_item(self):
+        abstract_item: Union[AbstractProductItem, None] = None
+        store_specific: Union[bool, None] = None
+        store: Union[Store, None] = None
+        measurement: Union[int, None] = None
+        name: Union[str, None] = None
+        brand: Union[str, None] = None
+
+        self.log("Create abstract item? y (n)")
+        _input = input("").strip()
+        if _input == "y":
+            self.create_abstract_item()
+            self.sync()
+
+        self.log('Search for abstract item')
+        _input = input("Search: ").strip()
+
+        while abstract_item is None:
+            self.log("Abstract items:")
+            self.log("---------------")
+            for i in self.abstract_items:
+                if _input.lower() in i.name.lower():
+                    self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)}', color="yellow")
+            self.log("")
+
+            _input = input("ID or new search phrase: ").strip()
+
+            try:
+                _id = int(_input)
+                abstract_item = temp_item_id_helper.get_item(_id)
+                self.log(f'Selected: {colored(str(abstract_item), "green")}')
+
+            except Exception as e:
+                pass
+
+            temp_item_id_helper.reset_ids()
+
+        while store_specific is None:
+            self.log("Is store specific item? y (n)")
+            _input = input("").strip()
+            if _input == "y":
+                store_specific = True
+                store = self.input_select_store()
+            else:
+                store_specific = False
+
+        while measurement is None:
+            try:
+                self.log(f"Input measurement (in {abstract_item.metric})")
+                measurement = int(input("Measurement: ").strip())
+            except Exception:
+                pass
+
+        while name is None:
+            try:
+                self.log(f"Input name")
+                name = input("Name: ").strip()
+            except Exception:
+                pass
+
+        while brand is None:
+            try:
+                self.log(f"Input brand")
+                brand = input("Brand: ").strip()
+            except Exception:
+                pass
+        new_concrete_item = ConcreteProductItem(abstractItemID=abstract_item.ID, name=name, brand=brand, measurement=measurement,
+                                                store_specific=store_specific, storeID=store.ID if store else None)
+        self.save_item_or_purchase(new_concrete_item)
+
+    def create_abstract_item(self) -> AbstractProductItem:
+        pass
+
 
 cli = FoodPCLI()
