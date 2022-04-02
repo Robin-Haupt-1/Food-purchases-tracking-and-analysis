@@ -142,14 +142,14 @@ class FoodPCLI:
                     self.log("Abstract items:")
                     self.log("---------------")
                     for i in self.abstract_items:
-                        if _input in i.name:
-                            self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)})', color="yellow")
+                        if _input.lower() in i.name.lower():
+                            self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)}', color="yellow")
                     self.log("")
 
                     self.log("Concrete items:")
                     self.log("---------------")
                     for i in self.concrete_items:
-                        if _input in i.name:
+                        if _input.lower() in i.name.lower():
                             a = self.get_abstract_item(i.abstractItemID)
                             self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)} ({i.measurement} {a.metric})', color="yellow")
 
