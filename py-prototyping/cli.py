@@ -210,13 +210,16 @@ class FoodPCLI:
         self.log("Create abstract item? y (n)")
         _input = input("").strip()
         if _input == "y":
-            self.create_abstract_item()
-            self.sync()
+            abstract_item = self.create_abstract_item()
 
-        self.log('Search for abstract item')
-        _input = input("Search: ").strip()
+        if not abstract_item:
+            self.log('Search for abstract item')
+            _input = input("Search: ").strip()
+        else:
+            self.log(f'Selected: {colored(str(abstract_item), "green")}')
 
         while abstract_item is None:
+
             self.log("Abstract items:")
             self.log("---------------")
             for i in self.abstract_items:
