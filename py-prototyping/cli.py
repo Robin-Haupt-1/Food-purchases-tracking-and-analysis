@@ -272,8 +272,38 @@ class FoodPCLI:
                                                 store_specific=store_specific, storeID=store.ID if store else None)
         self.save_item_or_purchase(new_concrete_item)
 
-    def create_abstract_item(self) -> AbstractProductItem:
-        pass
+    def create_abstract_item(self) -> Union[AbstractProductItem, None]:
+        metric: Union[str, None] = None
+        name: Union[str, None] = None
+
+        while name is None:
+            try:
+                self.log(f"Input name")
+                name = input("Name: ").strip()
+            except Exception:
+                pass
+
+        while metric is None:
+            try:
+                self.log(f"Input metric (g/ml) (g)")
+                _input = input("Measurement: ").strip()
+                if _input == "":
+                    metric = "g"
+                if _input in ["g", "ml"]:
+                    metric = _input
+
+            except Exception:
+                pass
+
+        new_abstract_item = AbstractProductItem(name=name, metric=metric)
+        id = self.save_item_or_purchase(new_abstract_item)
+        self.sync()
+        print(self.abstract_items)
+        created_item = None
+        for i in self.abstract_items:
+            if i.ID == id:
+                created_item = i
+        return created_item
 
 
 cli = FoodPCLI()
