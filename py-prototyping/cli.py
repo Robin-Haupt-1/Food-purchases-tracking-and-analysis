@@ -53,6 +53,16 @@ class FoodPCLI:
 
                 if json.loads(x.text)["status"] == "success":
                     self.log("Successfully created concrete product item!", color="green")
+            if type(item) == AbstractProductItem:
+                x = requests.post(self.server + "/items/abstract/add",
+                                  data=json.dumps(item.__dict__),
+                                  headers={'Content-Type': 'application/json'})
+
+                reply = json.loads(x.text)
+                if reply["status"] == "success":
+                    self.log("Successfully created concrete abstract item!", color="green")
+                    new_id = reply["id"] if "id" in reply else None
+
         except Exception:
             traceback.print_exc()
 
