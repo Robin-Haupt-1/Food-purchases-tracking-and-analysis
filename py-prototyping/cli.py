@@ -34,18 +34,7 @@ class FoodPCLI:
         self.stores = [Store(**store) for store in requests.get(self.server + "/stores/all").json()]
         self.concrete_items = [ConcreteProductItem(**store) for store in requests.get(self.server + "/items/concrete/all").json()]
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
-
-    def save_purchase(self, purchase: Purchase):
-        try:
-            x = requests.post(self.server + "/purchases/add",
-                              data=json.dumps(purchase.__dict__),
-                              headers={'Content-Type': 'application/json'})
-
-            if json.loads(x.text)["status"] == "success":
-                self.log("Successfully created purchase!", color="green")
-        except Exception:
-            traceback.print_exc()
-
+ 
     def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]):
 
         try:
@@ -73,10 +62,9 @@ class FoodPCLI:
                 return i
 
     def __init__(self):
-        self.log("Started")
         self.sync()
-        selected_store: Union[Store, None] = None
-        date: [datetime.date, None] = None
+        self.create_concrete_item()
+        # self.enter_purchase()
 
     def input_select_store(self) -> Store:
         selected_store = None
@@ -96,8 +84,12 @@ class FoodPCLI:
         except Exception as e:
             print(traceback.print_exc())
 
-            self.log("Selected " + colored(selected_store.name, "green"))
+    def enter_purchase(self):
+        selected_store: Union[Store, None] = None
+        date: [datetime.date, None] = None
+        while True:
             selected_store = self.input_select_store()
+
             while date is None:
                 try:
                     self.log('Enter date in YYYY-MM-DD format (press Enter for today)')
@@ -117,27 +109,28 @@ class FoodPCLI:
             self.log("Selected " + colored(date.strftime('%Y-%m-%d'), "green"))
             while selected_store is not None and date is not None:
 
-            while True:
-                self.log('Search for item (input "n" to create a new one, - to update date and store')
+                self.log('Search for item (input "n" to create a new one, - to update date and store)')
                 _input = input("Search: ").strip()
                 selected_item: Union[AbstractProductItem, ConcreteProductItem, None] = None
+                measurement: Union[None, int] = None  # in ml/g
+                amount: Union[None, int] = None
+                cost: Union[None, int] = None
+
                 while selected_item is None:
+
                     if _input == "n":
                         # create new item
+                        self.create_concrete_item()
                         self.sync()
                         continue
-                        pass
+
                     elif _input == "-":
                         date = None
                         selected_store = None
                         break
 
-                    cost: Union[int, None] = None  # in cents
                     concrete_item: Union[ConcreteProductItem, None] = None
                     abstract_Item: Union[AbstractProductItem, None] = None
-
-                    measurement: Union[None, int] = None  # in ml/g
-                    amount: Union[None, int] = None
 
                     self.log("Abstract items:")
                     self.log("---------------")
@@ -189,6 +182,7 @@ class FoodPCLI:
                         pass
                 new_purchase = Purchase(date, selected_store.ID, cost, concreteItemID=selected_item.ID if type(selected_item) == ConcreteProductItem else None,
                                         abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
+                self.save_item_or_purchase(new_purchase)
             self.sync()
 
     def create_concrete_item(self):
