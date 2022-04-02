@@ -10,13 +10,14 @@ class TempItemId:
     def get_id(self, item: Union[ConcreteProductItem, AbstractProductItem]) -> int:
         if not item in self.items:
             self.items.append(item)
-        return self.items.index(item)
+        return self.items.index(item) + 1
 
     def get_item(self, id: int) -> Union[ConcreteProductItem, AbstractProductItem]:
-        return self.items[id]
+        return self.items[id - 1]
 
 
-temp_item_id_helper=TempItemId()
+temp_item_id_helper = TempItemId()
+
 
 class FoodPCLI:
     log = Logging("Food Purchase Tracker CLI").log
