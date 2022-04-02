@@ -71,11 +71,11 @@ class FoodPCLI:
             self.log("Selected " + colored(selected_store.name, "green"))
             while date is None:
                 try:
-                    self.log('Enter date ("t" for today)')
+                    self.log('Enter date in YYYY-MM-DD format (press Enter for today)')
 
-                    # datestr = input("Date (YYYYMMDD): ").strip()
-                    datestr = "t"
-                    if datestr == "t":
+                    datestr = input("Date (YYYYMMDD): ").strip()
+                    # datestr = ""
+                    if datestr == "":
                         date = datetime.datetime.now().date()
                     else:
                         try:
