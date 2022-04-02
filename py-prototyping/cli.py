@@ -43,6 +43,27 @@ class FoodPCLI:
         except Exception:
             traceback.print_exc()
 
+    def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]):
+
+        try:
+            if type(item) == Purchase:
+                x = requests.post(self.server + "/purchases/add",
+                                  data=json.dumps(item.__dict__),
+                                  headers={'Content-Type': 'application/json'})
+
+                if json.loads(x.text)["status"] == "success":
+                    self.log("Successfully created purchase!", color="green")
+
+            if type(item) == ConcreteProductItem:
+                x = requests.post(self.server + "/items/concrete/add",
+                                  data=json.dumps(item.__dict__),
+                                  headers={'Content-Type': 'application/json'})
+
+                if json.loads(x.text)["status"] == "success":
+                    self.log("Successfully created concrete product item!", color="green")
+        except Exception:
+            traceback.print_exc()
+
     def get_abstract_item(self, id: int):
         for i in self.abstract_items:
             if i.ID == id:
