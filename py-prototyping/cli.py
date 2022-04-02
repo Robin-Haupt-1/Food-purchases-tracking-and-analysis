@@ -135,6 +135,14 @@ class FoodPCLI:
                         except Exception:
                             pass
 
+                if type(selected_item) == AbstractProductItem:
+                    while measurement is None:
+                        try:
+                            self.log(f"Input measurement (in {selected_item.metric})")
+                            measurement = int(input("Measurement: ").strip())
+                        except Exception:
+                            pass
+
                     self.sync()
 
 
