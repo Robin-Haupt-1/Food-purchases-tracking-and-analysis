@@ -27,7 +27,7 @@ class Purchase:
     ID: int = None
 
     def __post_init__(self):
-        if type(self.date)==datetime.date:
+        if type(self.date) == datetime.date:
             self.date = self.date.strftime("%Y-%m-%d")
 
         if not (self.measurement or self.amount):
@@ -54,6 +54,9 @@ class AbstractProductItem:
     metric: str
     ID: int = None
 
+    def __repr__(self):
+        return f'{self.name} ({self.metric}'
+
 
 @dataclass
 class ConcreteProductItem:
@@ -73,3 +76,6 @@ class ConcreteProductItem:
     def __post_init__(self):
         if self.store_specific and not self.storeID:
             raise Exception("Please specify ID of store this item is specific for!")
+
+    def __repr__(self):
+        return f'{self.name} ({self.brand})'
