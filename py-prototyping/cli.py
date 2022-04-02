@@ -53,22 +53,27 @@ class FoodPCLI:
         self.sync()
         selected_store: Union[Store, None] = None
         date: [datetime.date, None] = None
-        while True:
-            while selected_store is None:
-                try:
-                    self.log("Enter store")
 
-                    for store in self.stores:
-                        self.log(f'{store.ID}: {store.name}', start="\t", color="yellow")
+    def input_select_store(self) -> Store:
+        selected_store = None
+        try:
+            self.log("Enter store")
 
-                    store = int(input("Store: "))
-                    for s in self.stores:
-                        if s.ID == store:
-                            selected_store = s
-                except Exception as e:
-                    print(traceback.print_exc())
+            for store in self.stores:
+                self.log(f'{store.ID}: {store.name}', start="\t", color="yellow")
+
+            store = int(input("Store: "))
+            for s in self.stores:
+                if s.ID == store:
+                    selected_store = s
+            if selected_store:
+                self.log("Selected " + colored(selected_store.name, "green"))
+                return selected_store
+        except Exception as e:
+            print(traceback.print_exc())
 
             self.log("Selected " + colored(selected_store.name, "green"))
+            selected_store = self.input_select_store()
             while date is None:
                 try:
                     self.log('Enter date in YYYY-MM-DD format (press Enter for today)')
