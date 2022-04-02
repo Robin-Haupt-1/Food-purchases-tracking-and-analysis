@@ -143,6 +143,12 @@ class FoodPCLI:
                         except Exception:
                             pass
 
+                while cost is None:
+                    try:
+                        self.log(f"Input cost (in Eurocent)")
+                        cost = int(input("Measurement: ").strip())
+                    except Exception:
+                        pass
                     self.sync()
 
 
