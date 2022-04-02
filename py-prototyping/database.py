@@ -91,29 +91,27 @@ class MySQLDatabase(IDatabase):
         self.tables = tables
         self.conn = mysql_connector
 
-    def create(self, table: Tables, entry: dict):
+    def create(self, table: Tables, entry: dict) -> int:
         placeholders = ', '.join(['%s'] * len(entry))
         columns = ', '.join(entry.keys())
         sql = "INSERT INTO %s ( %s ) VALUES ( %s )" % (table, columns, placeholders)
         cur.execute(sql, list(entry.values()))
         conn.commit()
+        return cur.lastrowid or -1
 
     # ~ Create
 
-    def create_concrete_item(self, item: ConcreteProductItem):
-        self.create(self.tables.CONCRETE_ITEMS.value, item.__dict__)
-        pass
+    def create_concrete_item(self, item: ConcreteProductItem) -> int:
+        return self.create(self.tables.CONCRETE_ITEMS.value, item.__dict__)
 
-    def create_abstract_item(self, item: AbstractProductItem):
-        self.create(self.tables.ABSTRACT_ITEMS.value, item.__dict__)
-        pass
+    def create_abstract_item(self, item: AbstractProductItem) -> int:
+        return self.create(self.tables.ABSTRACT_ITEMS.value, item.__dict__)
 
-    def create_purchase(self, purchase: Purchase):
-        self.create(self.tables.PURCHASES.value, purchase.__dict__)
-        pass
+    def create_purchase(self, purchase: Purchase) -> int:
+        return self.create(self.tables.PURCHASES.value, purchase.__dict__)
 
-    def create_store(self, store: Store):
-        self.create(self.tables.STORES.value, store.__dict__)
+    def create_store(self, store: Store) -> int:
+        return self.create(self.tables.STORES.value, store.__dict__)
 
     # ~ Read
 

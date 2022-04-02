@@ -27,8 +27,11 @@ def make_response_from_list(response):
     return response
 
 
-def make_success_response():
-    response = flask.make_response(json.dumps({"status": "success"}, indent=4))
+def make_success_response(id=None):
+    _dict = {"status": "success"}
+    if id is not None:
+        _dict["id"] = id
+    response = flask.make_response(json.dumps(_dict, indent=4))
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -56,20 +59,20 @@ def get_all_purchases():
 @app.route("/items/concrete/add", methods=['POST'])
 def add_concrete_item():
     # TODO check refereced abstract item and store id exists
-    db.create_concrete_item(ConcreteProductItem(**request.json))
-    return make_success_response()
+    id = db.create_concrete_item(ConcreteProductItem(**request.json))
+    return make_success_response(id)
 
 
 @app.route("/items/abstract/add", methods=['POST'])
 def add_abstract_item():
-    db.create_abstract_item(AbstractProductItem(**request.json))
-    return make_success_response()
+    id = db.create_abstract_item(AbstractProductItem(**request.json))
+    return make_success_response(id)
 
 
 @app.route("/purchases/add", methods=['POST'])
 def add_purchase():
-    db.create_purchase(Purchase(**request.json))
-    return make_success_response()
+    id = db.create_purchase(Purchase(**request.json))
+    return make_success_response(id)
 
 
 if __name__ == "__main__":
