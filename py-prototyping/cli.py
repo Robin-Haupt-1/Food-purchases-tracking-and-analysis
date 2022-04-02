@@ -86,6 +86,7 @@ class FoodPCLI:
                     print(traceback.print_exc())
 
             self.log("Selected " + colored(date.strftime('%Y-%m-%d'), "green"))
+            while selected_store is not None and date is not None:
 
             while True:
                 self.log('Search for item (input "n" to create a new one, - to update date and store')
