@@ -7,12 +7,12 @@ import traceback
 class TempItemId:
     items: [Union[ConcreteProductItem, AbstractProductItem]] = []
 
-    def get_id(self, item: Union[ConcreteProductItem, AbstractProductItem]):
+    def get_id(self, item: Union[ConcreteProductItem, AbstractProductItem]) -> int:
         if not item in self.items:
             self.items.append(item)
         return self.items.index(item)
 
-    def get_item(self, id: int):
+    def get_item(self, id: int) -> Union[ConcreteProductItem, AbstractProductItem]:
         return self.items[id]
 
 
