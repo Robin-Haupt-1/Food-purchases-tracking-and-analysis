@@ -285,11 +285,22 @@ class FoodPCLI:
                 pass
 
         while brand is None:
+            all_brands = sorted(list(set([item.brand for item in self.concrete_items if (not item.store_specific or (store and item.storeID == store.ID))])),key=lambda x:x.lower())
+            print(all_brands)
+            self.log('Select brand or type name:')
+            self.log("Brands:")
+            self.log("---------------")
+            for b in all_brands:
+                self.log(f'{temp_item_id_helper.get_id(b)}: {b}', color="yellow")
+            self.log("")
+            _input = input("ID/Name: ").strip()
             try:
-                self.log(f"Input brand")
-                brand = input("Brand: ").strip()
+                id = int(_input)
+                brand = temp_item_id_helper.get_item(id)
             except Exception:
-                pass
+                brand = _input
+            self.log(f'Selected {colored(brand, color="green")}')
+
         new_concrete_item = ConcreteProductItem(abstractItemID=abstract_item.ID, name=name, brand=brand, measurement=measurement,
                                                 store_specific=store_specific, storeID=store.ID if store else None)
         id = self.save_item_or_purchase(new_concrete_item)
