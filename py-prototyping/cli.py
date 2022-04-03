@@ -71,7 +71,7 @@ class FoodPCLI:
         self.sync()
         return new_id
 
-    def get_instance(self, id, _type: type(Union[AbstractProductItem, ConcreteProductItem, Store])):
+    def get_instance(self, id, _type: type(Union[AbstractProductItem, ConcreteProductItem, Store])) -> Union[AbstractProductItem, ConcreteProductItem, Store]:
         list_to_search = {ConcreteProductItem: self.concrete_items, AbstractProductItem: self.abstract_items, Store: self.stores}[_type]
         for i in list_to_search:
             if i.ID == id:
