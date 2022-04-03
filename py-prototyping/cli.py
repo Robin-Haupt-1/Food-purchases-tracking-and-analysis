@@ -109,7 +109,7 @@ class FoodPCLI:
 
             while date is None:
                 try:
-                    self.log('Enter date in YYYY-MM-DD format (press Enter for today)')
+                    self.log('Enter date in YYYY-MM-DD format (press Enter for today, n for today-n days)')
 
                     datestr = input("Date (YYYYMMDD): ").strip()
                     # datestr = ""
@@ -119,7 +119,13 @@ class FoodPCLI:
                         try:
                             date = datetime.datetime.strptime(datestr, "%Y%m%d")
                         except Exception as e:
-                            print("Error!")
+                            try:
+                                past = int(datestr)
+                                if past >= 0:
+                                    date = (datetime.datetime.now() - datetime.timedelta(days=past)).date()
+
+                            except Exception as e:
+                                print("Error!")
                 except Exception as e:
                     print(traceback.print_exc())
 
