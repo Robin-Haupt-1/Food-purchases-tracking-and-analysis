@@ -68,6 +68,7 @@ class FoodPCLI:
 
         except Exception:
             traceback.print_exc()
+        self.sync()
         return new_id
 
     def get_abstract_item(self, id: int):
@@ -196,8 +197,7 @@ class FoodPCLI:
                         pass
                 new_purchase = Purchase(date, selected_store.ID, cost, concreteItemID=selected_item.ID if type(selected_item) == ConcreteProductItem else None,
                                         abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
-                self.save_item_or_purchase(new_purchase)
-            self.sync()
+                self.save_item_or_purchase(new_purchase) 
 
     def create_concrete_item(self):
         abstract_item: Union[AbstractProductItem, None] = None
