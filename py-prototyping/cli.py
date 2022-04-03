@@ -205,11 +205,14 @@ class FoodPCLI:
                     try:
                         self.log(f"Input cost (in Eurocent)")
                         cost = int(input("Measurement: ").strip())
+                        if amount>1:
+                            cost=int(cost/amount)
                     except Exception:
                         pass
-                new_purchase = Purchase(date, selected_store.ID, cost, concreteItemID=selected_item.ID if type(selected_item) == ConcreteProductItem else None,
-                                        abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
-                self.save_item_or_purchase(new_purchase) 
+                for i in range(amount if amount else 1):
+                    new_purchase = Purchase(date, selected_store.ID, cost, concreteItemID=selected_item.ID if type(selected_item) == ConcreteProductItem else None,
+                                            abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement)
+                    self.save_item_or_purchase(new_purchase)
 
     def create_concrete_item(self) -> ConcreteProductItem:
         abstract_item: Union[AbstractProductItem, None] = None
