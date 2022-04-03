@@ -1,3 +1,5 @@
+import datetime
+
 from mine.utils.logging import Logging
 from mine.imports import *
 from fp_types import *
@@ -63,7 +65,7 @@ class FoodPCLI:
 
                 reply = json.loads(x.text)
                 if reply["status"] == "success":
-                    self.log("Successfully created concrete abstract item!", color="green")
+                    self.log("Successfully created abstract product item!", color="green")
                     new_id = reply["id"] if "id" in reply else None
 
         except Exception:
@@ -166,14 +168,13 @@ class FoodPCLI:
                     for i in self.concrete_items:
                         if _input.lower() in i.name.lower():
                             a = self.get_instance(i.abstractItemID, AbstractProductItem)
-                            self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)} ({i.measurement} {a.metric})', color="yellow")
+                            self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)} ({i.measurement} {a.metric}) / {a.name}', color="yellow")
 
                     _input = input("ID or new search phrase: ").strip()
 
                     try:
                         _id = int(_input)
                         selected_item = temp_item_id_helper.get_item(_id)
-
 
                     except Exception as e:
                         pass
@@ -184,9 +185,9 @@ class FoodPCLI:
                     while amount is None:
                         try:
                             self.log("Input amount (1)")
-                            _input=input("Amount: ").strip()
-                            if _input=="":
-                                amount=1
+                            _input = input("Amount: ").strip()
+                            if _input == "":
+                                amount = 1
                             else:
                                 amount = int(_input)
 
@@ -205,8 +206,8 @@ class FoodPCLI:
                     try:
                         self.log(f"Input cost (in Eurocent)")
                         cost = int(input("Measurement: ").strip())
-                        if amount>1:
-                            cost=int(cost/amount)
+                        if amount > 1:
+                            cost = int(cost / amount)
                     except Exception:
                         pass
                 for i in range(amount if amount else 1):
@@ -333,7 +334,6 @@ class FoodPCLI:
         new_abstract_item = AbstractProductItem(name=name, metric=metric)
         id = self.save_item_or_purchase(new_abstract_item)
         self.sync()
-        print(self.abstract_items)
         created_item = None
         for i in self.abstract_items:
             if i.ID == id:
