@@ -143,7 +143,7 @@ class FoodPCLI:
 
                     if _input == "n":
                         # create new item
-                        selected_item=self.create_concrete_item()
+                        selected_item = self.create_concrete_item(selected_store)
                         continue
 
                     elif _input == "-":
@@ -259,7 +259,11 @@ class FoodPCLI:
             _input = input("").strip()
             if _input == "y":
                 store_specific = True
-                store = self.input_select_store()
+                if purchase_store:
+                    store = purchase_store
+                    self.log("Selected " + colored(store.name, "green"))
+                else:
+                    store = self.input_select_store()
             else:
                 store_specific = False
 
