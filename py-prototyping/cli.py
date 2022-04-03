@@ -111,15 +111,15 @@ class FoodPCLI:
 
             while date is None:
                 try:
-                    self.log('Enter date in YYYY-MM-DD format (press Enter for today, n for today-n days)')
+                    self.log('Enter date in YY-MM-DD format (press Enter for today, n for today-n days)')
 
-                    datestr = input("Date (YYYYMMDD): ").strip()
+                    datestr = input("Date (YYMMDD): ").strip()
                     # datestr = ""
                     if datestr == "":
                         date = datetime.datetime.now().date()
                     else:
                         try:
-                            date = datetime.datetime.strptime(datestr, "%Y%m%d")
+                            date = datetime.datetime.strptime(datestr, "%y%m%d").date()
                         except Exception as e:
                             try:
                                 past = int(datestr)
