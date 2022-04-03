@@ -143,8 +143,7 @@ class FoodPCLI:
 
                     if _input == "n":
                         # create new item
-                        self.create_concrete_item()
-                        self.sync()
+                        selected_item=self.create_concrete_item()
                         continue
 
                     elif _input == "-":
@@ -174,12 +173,12 @@ class FoodPCLI:
                     try:
                         _id = int(_input)
                         selected_item = temp_item_id_helper.get_item(_id)
-                        self.log(f'Selected: {colored(str(selected_item), "green")}')
+
 
                     except Exception as e:
                         pass
                     temp_item_id_helper.reset_ids()
-
+                self.log(f'Selected: {colored(str(selected_item), "green")}')
                 if type(selected_item) == ConcreteProductItem:
 
                     while amount is None:
@@ -212,7 +211,7 @@ class FoodPCLI:
                                         abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement, amount=amount)
                 self.save_item_or_purchase(new_purchase) 
 
-    def create_concrete_item(self):
+    def create_concrete_item(self) -> ConcreteProductItem:
         abstract_item: Union[AbstractProductItem, None] = None
         store_specific: Union[bool, None] = None
         store: Union[Store, None] = None
@@ -284,7 +283,8 @@ class FoodPCLI:
         new_concrete_item = ConcreteProductItem(abstractItemID=abstract_item.ID, name=name, brand=brand, measurement=measurement,
                                                 store_specific=store_specific, storeID=store.ID if store else None)
         id = self.save_item_or_purchase(new_concrete_item)
-        new_item=self.get_instance(id,ConcreteProductItem)
+        new_item = self.get_instance(id, ConcreteProductItem)
+        return new_item
 
     def create_abstract_item(self) -> Union[AbstractProductItem, None]:
         metric: Union[str, None] = None
