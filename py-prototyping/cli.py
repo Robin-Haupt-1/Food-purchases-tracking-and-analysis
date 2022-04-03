@@ -140,7 +140,7 @@ class FoodPCLI:
                 measurement: Optional[int] = None  # in ml/g
                 amount: Optional[int] = None
                 cost: Optional[int] = None
-
+                do_break = False
                 while selected_item is None:
 
                     if _input == "n":
@@ -151,6 +151,7 @@ class FoodPCLI:
                     elif _input == "-":
                         date = None
                         selected_store = None
+                        do_break = True
                         break
 
                     concrete_item: Optional[ConcreteProductItem] = None
@@ -179,6 +180,8 @@ class FoodPCLI:
                     except Exception as e:
                         pass
                     temp_item_id_helper.reset_ids()
+                if do_break:
+                    break
                 self.log(f'Selected: {colored(str(selected_item), "green")}')
                 if type(selected_item) == ConcreteProductItem:
 
