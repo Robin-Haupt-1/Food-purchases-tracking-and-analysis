@@ -31,6 +31,11 @@ class FoodPCLI:
     abstract_items = [AbstractProductItem]
     concrete_items = [ConcreteProductItem]
 
+
+    def __init__(self):
+        self.sync() 
+        self.enter_purchase()
+
     def sync(self):
         """update all internal representations of db"""
         self.stores = [Store(**store) for store in requests.get(self.server + "/stores/all").json()]
@@ -208,7 +213,7 @@ class FoodPCLI:
                 while cost is None:
                     try:
                         self.log(f"Input cost (in Eurocent)")
-                        cost = int(input("Measurement: ").strip())
+                        cost = int(input("Cost: ").strip())
                         if amount > 1:
                             cost = int(cost / amount)
                     except Exception:
@@ -289,7 +294,7 @@ class FoodPCLI:
                 pass
 
         while brand is None:
-            all_brands = sorted(list(set([item.brand for item in self.concrete_items if (not item.store_specific or (store and item.storeID == store.ID))])),key=lambda x:x.lower())
+            all_brands = sorted(list(set([item.brand for item in self.concrete_items if (not item.store_specific or (store and item.storeID == store.ID))])), key=lambda x: x.lower())
             print(all_brands)
             self.log('Select brand or type name:')
             self.log("Brands:")
