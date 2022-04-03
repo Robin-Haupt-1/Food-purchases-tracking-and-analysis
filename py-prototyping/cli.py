@@ -178,8 +178,13 @@ class FoodPCLI:
 
                     while amount is None:
                         try:
-                            self.log("Input amount")
-                            amount = int(input("Amount: ").strip())
+                            self.log("Input amount (1)")
+                            _input=input("Amount: ").strip()
+                            if _input=="":
+                                amount=1
+                            else:
+                                amount = int(_input)
+
                         except Exception:
                             pass
 
