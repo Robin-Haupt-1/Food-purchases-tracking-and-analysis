@@ -215,7 +215,7 @@ class FoodPCLI:
                                             abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement)
                     self.save_item_or_purchase(new_purchase)
 
-    def create_concrete_item(self) -> ConcreteProductItem:
+    def create_concrete_item(self, purchase_store) -> ConcreteProductItem:
         abstract_item: Union[AbstractProductItem, None] = None
         store_specific: Union[bool, None] = None
         store: Union[Store, None] = None
