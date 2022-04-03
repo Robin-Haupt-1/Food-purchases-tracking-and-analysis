@@ -71,10 +71,12 @@ class FoodPCLI:
         self.sync()
         return new_id
 
-    def get_abstract_item(self, id: int):
-        for i in self.abstract_items:
+    def get_instance(self, id, _type: type(Union[AbstractProductItem, ConcreteProductItem, Store])):
+        list_to_search = {ConcreteProductItem: self.concrete_items, AbstractProductItem: self.abstract_items, Store: self.stores}[_type]
+        for i in list_to_search:
             if i.ID == id:
                 return i
+        self.log(f'No instance of type {_type.__name__} found for id {id}', color="red")
 
     def __init__(self):
         self.sync()
@@ -158,7 +160,7 @@ class FoodPCLI:
                     self.log("---------------")
                     for i in self.concrete_items:
                         if _input.lower() in i.name.lower():
-                            a = self.get_abstract_item(i.abstractItemID)
+                            a = self.get_instance(i.abstractItemID, AbstractProductItem)
                             self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)} ({i.measurement} {a.metric})', color="yellow")
 
                     _input = input("ID or new search phrase: ").strip()
@@ -270,7 +272,8 @@ class FoodPCLI:
                 pass
         new_concrete_item = ConcreteProductItem(abstractItemID=abstract_item.ID, name=name, brand=brand, measurement=measurement,
                                                 store_specific=store_specific, storeID=store.ID if store else None)
-        self.save_item_or_purchase(new_concrete_item)
+        id = self.save_item_or_purchase(new_concrete_item)
+        new_item=self.get_instance(id,ConcreteProductItem)
 
     def create_abstract_item(self) -> Union[AbstractProductItem, None]:
         metric: Union[str, None] = None
