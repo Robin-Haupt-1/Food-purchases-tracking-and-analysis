@@ -1,5 +1,5 @@
 import datetime
-
+from typing import Optional
 from mine.utils.logging import Logging
 from mine.imports import *
 from fp_types import *
@@ -37,7 +37,7 @@ class FoodPCLI:
         self.concrete_items = [ConcreteProductItem(**store) for store in requests.get(self.server + "/items/concrete/all").json()]
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
 
-    def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]) -> Union[None, int]:
+    def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]) -> Optional[int]:
         new_id = None
         try:
             if type(item) == Purchase:
@@ -104,8 +104,8 @@ class FoodPCLI:
             print(traceback.print_exc())
 
     def enter_purchase(self):
-        selected_store: Union[Store, None] = None
-        date: [datetime.date, None] = None
+        selected_store: Optional[Store] = None
+        date: Optional[datetime.date] = None
         while True:
             selected_store = self.input_select_store()
 
@@ -136,10 +136,10 @@ class FoodPCLI:
 
                 self.log('Search for item (input "n" to create a new one, - to update date and store)')
                 _input = input("Search: ").strip()
-                selected_item: Union[AbstractProductItem, ConcreteProductItem, None] = None
-                measurement: Union[None, int] = None  # in ml/g
-                amount: Union[None, int] = None
-                cost: Union[None, int] = None
+                selected_item: Optional[AbstractProductItem, ConcreteProductItem] = None
+                measurement: Optional[int] = None  # in ml/g
+                amount: Optional[int] = None
+                cost: Optional[int] = None
 
                 while selected_item is None:
 
@@ -153,8 +153,8 @@ class FoodPCLI:
                         selected_store = None
                         break
 
-                    concrete_item: Union[ConcreteProductItem, None] = None
-                    abstract_Item: Union[AbstractProductItem, None] = None
+                    concrete_item: Optional[ConcreteProductItem] = None
+                    abstract_Item: Optional[AbstractProductItem] = None
 
                     self.log("Abstract items:")
                     self.log("---------------")
@@ -216,12 +216,12 @@ class FoodPCLI:
                     self.save_item_or_purchase(new_purchase)
 
     def create_concrete_item(self, purchase_store) -> ConcreteProductItem:
-        abstract_item: Union[AbstractProductItem, None] = None
-        store_specific: Union[bool, None] = None
-        store: Union[Store, None] = None
-        measurement: Union[int, None] = None
-        name: Union[str, None] = None
-        brand: Union[str, None] = None
+        abstract_item: Optional[AbstractProductItem] = None
+        store_specific: Optional[bool] = None
+        store: Optional[Store] = None
+        measurement: Optional[int] = None
+        name: Optional[str] = None
+        brand: Optional[str] = None
 
         self.log("Create abstract item? y (n)")
         _input = input("").strip()
@@ -308,9 +308,9 @@ class FoodPCLI:
         new_item = self.get_instance(id, ConcreteProductItem)
         return new_item
 
-    def create_abstract_item(self) -> Union[AbstractProductItem, None]:
-        metric: Union[str, None] = None
-        name: Union[str, None] = None
+    def create_abstract_item(self) -> Optional[AbstractProductItem]:
+        metric: Optional[str] = None
+        name: Optional[str] = None
 
         while name is None:
             try:
