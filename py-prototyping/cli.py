@@ -276,8 +276,11 @@ class FoodPCLI:
 
         while name is None:
             try:
-                self.log(f"Input name")
+                self.log(f"Input name (Enter = {abstract_item.name})")
                 name = input("Name: ").strip()
+                if name == "":
+                    name = abstract_item.name
+
             except Exception:
                 pass
 
