@@ -307,7 +307,6 @@ class FoodPCLI:
 
         while brand is None:
             all_brands = sorted(list(set([item.brand for item in self.concrete_items if (not item.store_specific or (store and item.storeID == store.ID))])), key=lambda x: x.lower())
-            print(all_brands)
             self.log('Select brand or type name:')
             self.log("Brands:")
             self.log("---------------")
@@ -321,6 +320,7 @@ class FoodPCLI:
             except Exception:
                 brand = _input
             self.log(f'Selected {colored(brand, color="green")}')
+            temp_item_id_helper.reset_ids()
 
         new_concrete_item = ConcreteProductItem(abstractItemID=abstract_item.ID, name=name, brand=brand, measurement=measurement,
                                                 store_specific=store_specific, storeID=store.ID if store else None)
