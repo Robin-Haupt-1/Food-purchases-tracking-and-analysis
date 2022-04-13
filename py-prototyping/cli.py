@@ -192,7 +192,10 @@ class FoodPCLI:
                         if (i.store_specific and not i.storeID == selected_store.ID) and _input.lower() in i.name.lower():
                             a = self.get_instance(i.abstractItemID, AbstractProductItem)
                             self.log(f'{temp_item_id_helper.get_id(i)}: {str(i)} ({i.measurement} {a.metric}) / {a.name}', color="yellow")
+                    _input = input("ID or new search phrase: (Enter=1) ").strip()
 
+                    if _input == "":
+                        _input = "1"
                     try:
                         _id = int(_input)
                         selected_item = temp_item_id_helper.get_item(_id)
