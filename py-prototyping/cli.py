@@ -84,11 +84,6 @@ class FoodPCLI:
                 return i
         self.log(f'No instance of type {_type.__name__} found for id {id}', color="red")
 
-    def __init__(self):
-        self.sync()
-        self.create_concrete_item()
-        # self.enter_purchase()
-
     def input_select_store(self) -> Store:
         selected_store = None
         try:
