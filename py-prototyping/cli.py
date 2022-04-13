@@ -141,11 +141,12 @@ class FoodPCLI:
                 amount: Optional[int] = None
                 cost: Optional[int] = None
                 do_break = False
+                item_search_phrase = None
                 while selected_item is None:
 
                     if _input == "n":
                         # create new item
-                        selected_item = self.create_concrete_item(selected_store)
+                        selected_item = self.create_concrete_item(selected_store, item_search_phrase)
                         continue
 
                     if _input == "na":
@@ -163,6 +164,8 @@ class FoodPCLI:
                         date = None
                         do_break = True
                         break
+
+                    item_search_phrase = _input
 
                     concrete_item: Optional[ConcreteProductItem] = None
                     abstract_Item: Optional[AbstractProductItem] = None
@@ -228,7 +231,7 @@ class FoodPCLI:
                                             abstractItemID=selected_item.ID if type(selected_item) == AbstractProductItem else None, measurement=measurement)
                     self.save_item_or_purchase(new_purchase)
 
-    def create_concrete_item(self, purchase_store) -> ConcreteProductItem:
+    def create_concrete_item(self, purchase_store, item_search_phrase) -> ConcreteProductItem:
         abstract_item: Optional[AbstractProductItem] = None
         store_specific: Optional[bool] = None
         store: Optional[Store] = None
@@ -241,11 +244,15 @@ class FoodPCLI:
         if _input == "y":
             abstract_item = self.create_abstract_item()
 
-        if not abstract_item:
-            self.log('Search for abstract item')
-            _input = input("Search: ").strip()
+        if item_search_phrase:
+            _input = item_search_phrase
+            item_search_phrase = None
         else:
-            self.log(f'Selected: {colored(str(abstract_item), "green")}')
+            if not abstract_item:
+                self.log('Search for abstract item')
+                _input = input("Search: ").strip()
+            else:
+                self.log(f'Selected: {colored(str(abstract_item), "green")}')
 
         while abstract_item is None:
 
