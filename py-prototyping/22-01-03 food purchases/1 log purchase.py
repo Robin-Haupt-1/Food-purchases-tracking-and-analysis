@@ -51,8 +51,8 @@ ps = [{"store": "1", "items": [{"name": "Knollensellerie", "weight": 0.918, "cos
                                ], "date": "2022-01-05"},
       {"store": "3", "items": [{"name": "Rote Bete", "weight": 0.234, "cost": 0.28}
 
-                               ], "date": "2022-01-05"},  {"store": "5", "items": [{"name": "Enerbio Sojamilch 1000ml", "amount":2, "cost":1.98},
-], "date": "2022-01-10"}]
+                               ], "date": "2022-01-05"}, {"store": "5", "items": [{"name": "Enerbio Sojamilch 1000ml", "amount": 2, "cost": 1.98},
+                                                                                  ], "date": "2022-01-10"}]
 """
       
       {"store": "", "items": [{"name": "", "amount":, "cost":},
@@ -119,6 +119,7 @@ class LogPurchaseToMySQL:
     def get_item(self, name: str, store: int):
         cur.execute("select * from foodp_items where name='aaa'")
 
+
 class db:
     def __init__(self):
         """"""
@@ -131,26 +132,27 @@ class db:
         cur.execute("select id, name, metric, measure, measurement from foodp_items")
         return cur.fetchall()
 
-    def add_item(self,name,metric,measurement=None,measure=None):
-        print(name,metric,measurement,measure)
+    def add_item(self, name, metric, measurement=None, measure=None):
+        print(name, metric, measurement, measure)
 
         log("Adding new item " + name)
         cur.execute("insert into foodp_items (name,metric,measure,measurement) values (%s,%s,%s,%s)",
-                        (name, metric,measure,measurement))
-        print(name,metric,measurement,measure)
+                    (name, metric, measure, measurement))
+        print(name, metric, measurement, measure)
         conn.commit()
 
 
-
-d=db()
+d = db()
 
 print(d.all_stores())
+
 
 @app.route("/stores/all")
 def all_stores():
     response = flask.make_response(json.dumps(d.all_stores()))
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 @app.route("/items/add")
 def add_item():
@@ -161,14 +163,15 @@ def add_item():
     if metric == "amount":
         measurement = request.args.get("measurement")
     else:
-        measurement=None
+        measurement = None
 
     print(name, metric, measurement, measure)
 
-    d.add_item(name,metric,measurement,measure)
+    d.add_item(name, metric, measurement, measure)
     response = flask.make_response("success")
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
 
 @app.route("/items/all")
 def all_items():
@@ -176,8 +179,9 @@ def all_items():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-#m = LogPurchaseToMySQL()
-#m.get_item("aae", 3)
+
+# m = LogPurchaseToMySQL()
+# m.get_item("aae", 3)
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=1240)

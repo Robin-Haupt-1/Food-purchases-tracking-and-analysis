@@ -58,7 +58,7 @@ def get_all_purchases():
 
 @app.route("/items/concrete/add", methods=['POST'])
 def add_concrete_item():
-    # TODO check refereced abstract item and store id exists
+    # TODO check referenced abstract item and store id exists
     id = db.create_concrete_item(ConcreteProductItem(**request.json))
     return make_success_response(id)
 

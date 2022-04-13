@@ -48,7 +48,7 @@ class AbstractProductItem:
     ID: int = None
 
     def __repr__(self):
-        return f'{self.name} ({self.metric}'
+        return f'{self.name} ({self.metric})'
 
 
 @dataclass
