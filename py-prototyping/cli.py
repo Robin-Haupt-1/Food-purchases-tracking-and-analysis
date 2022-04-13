@@ -90,11 +90,11 @@ class FoodPCLI:
             self.log("Enter store")
 
             for store in self.stores:
-                self.log(f'{store.ID}: {store.name}', start="\t", color="yellow")
+                self.log(f'{temp_item_id_helper.get_id(store.ID)}: {store.name}', start="\t", color="yellow")
 
             store = int(input("Store: "))
             for s in self.stores:
-                if s.ID == store:
+                if s.ID == temp_item_id_helper.get_item(store):
                     selected_store = s
             if selected_store:
                 self.log("Selected " + colored(selected_store.name, "green"))
