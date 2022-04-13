@@ -25,15 +25,14 @@ temp_item_id_helper = TempItemId()
 
 
 class FoodPCLI:
-    log = Logging("Food Purchase Tracker CLI").log
+    log = Logging("Food Purchase Tracker").log
     server = "http://10.28.4.2:1241"
     stores = [Store]
     abstract_items = [AbstractProductItem]
     concrete_items = [ConcreteProductItem]
 
-
     def __init__(self):
-        self.sync() 
+        self.sync()
         self.enter_purchase()
 
     def sync(self):
