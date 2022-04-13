@@ -7,9 +7,9 @@ import traceback
 
 
 class TempItemId:
-    items: [Union[ConcreteProductItem, AbstractProductItem, str]] = []
+    items: [Union[ConcreteProductItem, AbstractProductItem, str, int]] = []
 
-    def get_id(self, item: Union[ConcreteProductItem, AbstractProductItem, str]) -> int:
+    def get_id(self, item: Union[ConcreteProductItem, AbstractProductItem, str, int]) -> int:
         if item not in self.items:
             self.items.append(item)
         return self.items.index(item) + 1
