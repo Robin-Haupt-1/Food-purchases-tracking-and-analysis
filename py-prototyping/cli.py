@@ -106,7 +106,8 @@ class FoodPCLI:
         selected_store: Optional[Store] = None
         date: Optional[datetime.date] = None
         while True:
-            selected_store = self.input_select_store()
+            while selected_store is None:
+                selected_store = self.input_select_store()
 
             while date is None:
                 try:
