@@ -98,6 +98,7 @@ class FoodPCLI:
                     selected_store = s
             if selected_store:
                 self.log("Selected " + colored(selected_store.name, "green"))
+                temp_item_id_helper.reset_ids()
                 return selected_store
         except Exception as e:
             print(traceback.print_exc())
