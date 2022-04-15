@@ -87,7 +87,7 @@ class FoodPCLI:
     def input_select_store(self) -> Store:
         selected_store = None
         try:
-            self.log("Enter store")
+            self.log("Select store")
 
             for store in self.stores:
                 self.log(f'{temp_item_id_helper.get_id(store.ID)}: {store.name}', start="\t", color="yellow")
@@ -112,7 +112,7 @@ class FoodPCLI:
 
             while date is None:
                 try:
-                    self.log('Enter date in YY-MM-DD format (press Enter for today, n for today-n days)')
+                    self.log('Enter date in YYMMDD format (press Enter for today, n for today-n days)')
 
                     datestr = input("Date (YYMMDD): ").strip()
                     # datestr = ""
@@ -249,7 +249,7 @@ class FoodPCLI:
         name: Optional[str] = None
         brand: Optional[str] = None
 
-        self.log("Create abstract item? y (n)")
+        self.log("Create abstract item? y/n (n)")
         _input = input("").strip()
         if _input == "y":
             abstract_item = self.create_abstract_item()
@@ -286,7 +286,7 @@ class FoodPCLI:
             temp_item_id_helper.reset_ids()
 
         while store_specific is None:
-            self.log("Is store specific item? y (n)")
+            self.log("Is store specific item? y/n (n)")
             _input = input("").strip()
             if _input == "y":
                 store_specific = True
@@ -352,7 +352,7 @@ class FoodPCLI:
         while metric is None:
             try:
                 self.log(f"Input metric (g/ml) (g)")
-                _input = input("Measurement: ").strip()
+                _input = input("Metric: ").strip()
                 if _input == "":
                     metric = "g"
                 if _input in ["g", "ml"]:
