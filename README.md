@@ -1,5 +1,18 @@
+# 2022-04-15 
 
-# What information should get stored (2022-02-04)
+## Screencasts of CLI usage
+
+### Entering purchase of an existing item
+
+https://user-images.githubusercontent.com/85873542/163574689-0f30b1bb-3dc1-428f-b406-2dde6fb7dac1.mp4
+
+### Creating new item information while entering purchase
+
+https://user-images.githubusercontent.com/85873542/163574717-8024f1d0-0ad9-489e-98b9-9f32ae49e7af.mp4
+
+
+
+# 2022-02-04: What information should get stored
 
 I want the store of purchase information be both very accurate (concrete) as well as easy to analyze and to derive higher-level insights from (abstract).
 One challenge to that is the question of how to categorize items. For instance, there are many different brands of rolled oats, soy milk or lentils that you could buy at different stores in different package sizes, but the actual product is mostly the same, since these products are all commodities. In a monthly overview, i would rather know how many lentils i bought in total than see all the different brands and stores i got them from. Still it would be interesting to preserve store, brand and package size information as well.
