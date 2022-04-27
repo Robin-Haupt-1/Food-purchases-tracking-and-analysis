@@ -76,4 +76,4 @@ def add_purchase():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=1241)
+    app.run(host='0.0.0.0', port=1249)

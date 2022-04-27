@@ -26,7 +26,7 @@ temp_item_id_helper = TempItemId()
 
 class FoodPCLI:
     log = Logging("Food Purchase Tracker").log
-    server = "http://10.28.4.2:1241"
+    server = "http://localhost:1249"
     stores = [Store]
     abstract_items = [AbstractProductItem]
     concrete_items = [ConcreteProductItem]
