@@ -42,6 +42,7 @@ class FoodPCLI:
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
 
     def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]) -> Optional[int]:
+        """Send information to the server to be stored to db"""
         new_id = None
         try:
             if type(item) == Purchase:
@@ -78,6 +79,7 @@ class FoodPCLI:
         return new_id
 
     def get_instance(self, id, _type: type(Union[AbstractProductItem, ConcreteProductItem, Store])) -> Union[AbstractProductItem, ConcreteProductItem, Store]:
+        """Get instance of items or stores from cached representation of db"""
         list_to_search = {ConcreteProductItem: self.concrete_items, AbstractProductItem: self.abstract_items, Store: self.stores}[_type]
         for i in list_to_search:
             if i.ID == id:
@@ -85,6 +87,7 @@ class FoodPCLI:
         self.log(f'No instance of type {_type.__name__} found for id {id}', color="red")
 
     def input_select_store(self) -> Store:
+        """routine for selecting and returning store from other routines"""
         selected_store = None
         try:
             self.log("Select store")
@@ -168,7 +171,7 @@ class FoodPCLI:
 
                     item_search_phrase = _input
 
-                    concrete_item: Optional[ConcreteProductItem] = None
+                    # print all items to choose from
                     abstract_Item: Optional[AbstractProductItem] = None
 
                     self.log("Abstract items:")
