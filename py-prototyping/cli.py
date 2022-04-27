@@ -201,11 +201,10 @@ class FoodPCLI:
                     _input = input("ID or new search phrase: (Enter=1) ").strip()
 
                     if _input == "":
-                        _input = "1"
+                        _input = 1
                     try:
                         _id = int(_input)
                         selected_item = temp_item_id_helper.get_item(_id)
-
                     except Exception as e:
                         pass
                     temp_item_id_helper.reset_ids()
@@ -213,7 +212,6 @@ class FoodPCLI:
                     break
                 self.log(f'Selected: {colored(str(selected_item), "green")}')
                 if type(selected_item) == ConcreteProductItem:
-
                     while amount is None:
                         try:
                             self.log("Input amount (1)")
