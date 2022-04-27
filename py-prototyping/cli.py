@@ -138,7 +138,7 @@ class FoodPCLI:
             self.log("Selected " + colored(date.strftime('%Y-%m-%d'), "green"))
             while selected_store is not None and date is not None:
 
-                self.log('Search for item (input "n" to create a new concrete, "na" new abstract item, - to update date and store, -d to update date)')
+                self.log('Search for item (input "n" to create a new concrete, "na" new abstract item, - to update date and store, -d to update date, -s to update store)')
                 _input = input("Search: ").strip()
                 selected_item: Optional[AbstractProductItem, ConcreteProductItem] = None
                 measurement: Optional[int] = None  # in ml/g
@@ -169,11 +169,14 @@ class FoodPCLI:
                         do_break = True
                         break
 
+                    elif _input == "-s":
+                        selected_store = None
+                        do_break = True
+                        break
+
                     item_search_phrase = _input
 
                     # print all items to choose from
-                    abstract_Item: Optional[AbstractProductItem] = None
-
                     self.log("Abstract items:")
                     self.log("---------------")
                     for i in self.abstract_items:
