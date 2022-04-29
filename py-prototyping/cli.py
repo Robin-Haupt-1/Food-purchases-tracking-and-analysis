@@ -104,8 +104,7 @@ class FoodPCLI:
                 temp_item_id_helper.reset_ids()
                 return selected_store
         except Exception as e:
-            print(traceback.print_exc())
-
+            pass
     def enter_purchase(self):
         selected_store: Optional[Store] = None
         date: Optional[datetime.date] = None
