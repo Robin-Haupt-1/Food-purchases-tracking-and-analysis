@@ -90,10 +90,12 @@ class FoodPCLI:
         """routine for selecting and returning store from other routines"""
         selected_store = None
         try:
-            self.log("Select store")
+            self.log("Select store:")
+            self.log("-------------")
 
             for store in self.stores:
-                self.log(f'{temp_item_id_helper.get_id(store.ID)}: {store.name}', start="\t", color="yellow")
+                #self.log(f'{temp_item_id_helper.get_id(store.ID)}: {store.name}', start="\t", color="yellow")
+                self.log("{:<5} {:<10}".format(temp_item_id_helper.get_id(store.ID),store.name), start="\t", color="yellow")
 
             store = int(input("Store: "))
             for s in self.stores:
