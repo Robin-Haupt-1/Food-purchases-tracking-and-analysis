@@ -1,6 +1,6 @@
 import datetime
 from typing import Optional
-from mine.utils.logging import Logging
+from mine.utils._logging import Logging
 from mine.imports import *
 from fp_types import *
 import traceback
@@ -45,6 +45,7 @@ class FoodPCLI:
         """Send information to the server to be stored to db"""
         new_id = None
         try:
+            # TODO DRY this up
             if type(item) == Purchase:
                 x = requests.post(self.server + "/purchases/add",
                                   data=json.dumps(item.__dict__),
@@ -63,6 +64,7 @@ class FoodPCLI:
                 if reply["status"] == "success":
                     self.log("Successfully created concrete product item!", color="green")
                     new_id = reply["id"] if "id" in reply else None
+
             if type(item) == AbstractProductItem:
                 x = requests.post(self.server + "/items/abstract/add",
                                   data=json.dumps(item.__dict__),
@@ -94,8 +96,8 @@ class FoodPCLI:
             self.log("-------------")
 
             for store in self.stores:
-                #self.log(f'{temp_item_id_helper.get_id(store.ID)}: {store.name}', start="\t", color="yellow")
-                self.log("{:<5} {:<10}".format(temp_item_id_helper.get_id(store.ID),store.name), start="\t", color="yellow")
+                # self.log(f'{temp_item_id_helper.get_id(store.ID)}: {store.name}', start="\t", color="yellow")
+                self.log("{:<5} {:<10}".format(temp_item_id_helper.get_id(store.ID), store.name), color="yellow")  # start="\t",
 
             store = int(input("Store: "))
             for s in self.stores:
@@ -107,6 +109,7 @@ class FoodPCLI:
                 return selected_store
         except Exception as e:
             pass
+
     def enter_purchase(self):
         selected_store: Optional[Store] = None
         date: Optional[datetime.date] = None
@@ -334,6 +337,9 @@ class FoodPCLI:
                 brand = temp_item_id_helper.get_item(id)
             except Exception:
                 brand = _input
+
+            if _input == "-":
+                brand = "Ohne Marke"
             self.log(f'Selected {colored(brand, color="green")}')
             temp_item_id_helper.reset_ids()
 
