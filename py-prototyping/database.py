@@ -2,7 +2,7 @@ from mine.private import mysql_cred_localhost
 import datetime
 import pickle
 
-from mine.utils.logging import Logging
+from mine.utils._logging import Logging
 import json
 import random
 from dataclasses import dataclass
