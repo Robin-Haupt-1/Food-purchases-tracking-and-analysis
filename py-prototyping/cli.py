@@ -26,7 +26,7 @@ temp_item_id_helper = TempItemId()
 
 class FoodPCLI:
     log = Logging("Food Purchase Tracker").log
-    server = "http://localhost:1249"
+    server = "http://localhost:1253"
     stores = [Store]
     abstract_items = [AbstractProductItem]
     concrete_items = [ConcreteProductItem]
@@ -156,7 +156,7 @@ class FoodPCLI:
             self.log("Selected " + colored(date.strftime('%Y-%m-%d'), "green"))
             while selected_store is not None and date is not None:
 
-                self.log('Search for item (input "n" to create a new concrete, "na" new abstract item, - to update date and store, -d to update date, -s to update store)')
+                self.log('Search for item (input "nc" to create a new concrete, "na" new abstract item, - to update date and store, -d to update date, -s to update store)')
                 _input = input("Search: ").strip()
                 selected_item: Optional[AbstractProductItem, ConcreteProductItem] = None
                 measurement: Optional[int] = None  # in ml/g
@@ -166,7 +166,7 @@ class FoodPCLI:
                 item_search_phrase = None
                 while selected_item is None:
 
-                    if _input == "n":
+                    if _input == "nc":
                         # create new item
                         selected_item = self.create_concrete_item(selected_store, item_search_phrase)
                         continue
