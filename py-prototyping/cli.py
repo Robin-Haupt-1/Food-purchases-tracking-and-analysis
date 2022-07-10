@@ -38,8 +38,22 @@ class FoodPCLI:
     def sync(self):
         """update all internal representations of db"""
         self.stores = [Store(**store) for store in requests.get(self.server + "/stores/all").json()]
+        self.purchases = [Purchase(**purchase) for purchase in requests.get(self.server + "/purchases/all").json()]
         self.concrete_items = [ConcreteProductItem(**store) for store in requests.get(self.server + "/items/concrete/all").json()]
+        self.concrete_items = sorted(self.concrete_items, key=lambda i: self.no_of_purchases(i), reverse=True)
         self.abstract_items = [AbstractProductItem(**store) for store in requests.get(self.server + "/items/abstract/all").json()]
+        self.abstract_items = sorted(self.abstract_items, key=lambda i: self.no_of_purchases(i), reverse=True)
+
+    def no_of_purchases(self, item: Union[AbstractProductItem, ConcreteProductItem]):
+        def match_item(p: Purchase):
+            if type(item) == AbstractProductItem:
+                # also count it if a concrete item belonging to given abstract item was purchased
+                return (p.abstractItemID or self.get_instance(p.concreteItemID, ConcreteProductItem).abstractItemID ) == item.ID
+
+            if type(item) == ConcreteProductItem:
+                return p.concreteItemID == item.ID
+
+        return len([p for p in self.purchases if match_item(p)])
 
     def save_item_or_purchase(self, item: Union[ConcreteProductItem, AbstractProductItem, Purchase]) -> Optional[int]:
         """Send information to the server to be stored to db"""
