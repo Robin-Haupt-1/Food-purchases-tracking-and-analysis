@@ -246,14 +246,27 @@ class FoodPCLI:
                     while measurement is None:
                         try:
                             self.log(f"Input measurement (in {selected_item.metric})")
-                            measurement = int(input("Measurement: ").strip())
+                            _input = input("Measurement: ").strip()
+                            if "+" in _input:
+
+                                adduenten = [int(x.strip()) for x in _input.split("+")]
+                                self.log(f"Adding up {' + '.join([str(x) for x in adduenten])} = {sum(adduenten)}")
+                                measurement = sum(adduenten)
+                            else:
+                                measurement = int(_input)
                         except Exception:
-                            pass
+                            traceback.print_exc()
 
                 while cost is None:
                     try:
                         self.log(f"Input cost (in Eurocent)")
-                        cost = int(input("Cost: ").strip())
+                        _input = input("Cost: ").strip()
+                        if "+" in _input:
+                            adduenten = [int(x.strip()) for x in _input.split("+")]
+                            self.log(f"Adding up {' + '.join([str(x) for x in adduenten])} = {sum(adduenten)}")
+                            cost = sum(adduenten)
+                        else:
+                            cost = int(_input)
                         if amount > 1:
                             cost = int(cost / amount)
                     except Exception:
